@@ -12,5 +12,5 @@ A lightweight web-based tree monitoring and inventory dashboard designed for tra
 - **Data Export & Local Persistence**: Export records as CSV and persist data locally in the browser.
 
 ## Files
-- `OSF_400_Tree_Monitoring.html`: Version preloaded with 400 tree records (`OSF-KLR-0001` to `OSF-KLR-0400`).
 - `OSF_Tree_Monitoring_Editable.html`: Dynamic and editable tree monitoring interface.
+
