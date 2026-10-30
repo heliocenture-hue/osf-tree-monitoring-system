@@ -12,5 +12,6 @@ A lightweight web-based tree monitoring and inventory dashboard designed for tra
 - **Data Export & Local Persistence**: Export records as CSV and persist data locally in the browser.
 
 ## Files
-- `OSF_Tree_Monitoring_Editable.html`: Dynamic and editable tree monitoring interface.
+- `index.html`: Main application entry point for web deployment (Vercel, GitHub Pages, etc.).
+- `OSF_Tree_Monitoring_Editable.html`: Editable tree monitoring dashboard template.
 
