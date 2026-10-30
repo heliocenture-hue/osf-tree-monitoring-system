@@ -78,6 +78,7 @@ footer{text-align:center;padding:24px;color:#728078;font-size:13px}
     <button type="submit">💾 Save Tree Record</button>
     <button type="button" class="secondary" onclick="resetForm()">＋ New Record</button>
     <button type="button" class="secondary" onclick="exportCSV()">⬇ Export CSV</button>
+    <button type="button" class="secondary" onclick="resetAllTo400()">🔄 Reset 400 Trees</button>
    </div>
   </form>
  </div>
@@ -108,10 +109,36 @@ footer{text-align:center;padding:24px;color:#728078;font-size:13px}
 <footer>Our Shoulders Foundation • Tree Plantation • Monitoring • Biodiversity • Sustainability</footer>
 
 <script>
-const KEY='osfTreeRecordsV1';
-let records=JSON.parse(localStorage.getItem(KEY)||'null') || [
- {treeId:'OSF-KLR-0001',commonName:'Pungam',botanicalName:'Pongamia pinnata',plantDate:'2026-07-15',location:'Achatnahalli, Kolar, Karnataka',latitude:'13.1358',longitude:'78.1294',height:'2.4',girth:'18',health:'Healthy',status:'Surviving',monitorDate:'2026-10-20',maintenance:'Watering & weeding',csrPartner:'ABC Company Limited',implementer:'Our Shoulders Foundation',projectName:'Afforestation Initiative',remarks:'Tree condition satisfactory.',photo:''}
-];
+const KEY='osfTreeRecordsV2';
+
+function generate400Records(){
+ return Array.from({length:400},(_,i)=>({
+  treeId:'OSF-KLR-'+String(i+1).padStart(4,'0'),
+  commonName:'',
+  botanicalName:'',
+  plantDate:'',
+  location:'Achatnahalli, Kolar, Karnataka',
+  latitude:'',
+  longitude:'',
+  height:'',
+  girth:'',
+  health:'Healthy',
+  status:'Surviving',
+  monitorDate:'',
+  maintenance:'',
+  csrPartner:'',
+  implementer:'Our Shoulders Foundation',
+  projectName:'Plantation Monitoring Project',
+  remarks:'',
+  photo:''
+ }));
+}
+
+let records=JSON.parse(localStorage.getItem(KEY)||'null');
+if(!records || !Array.isArray(records) || records.length < 400){
+ records=generate400Records();
+ localStorage.setItem(KEY,JSON.stringify(records));
+}
 let pendingPhoto='';
 
 function save(){localStorage.setItem(KEY,JSON.stringify(records));renderTable();updateStats()}
@@ -166,6 +193,12 @@ function exportCSV(){
  const keys=['treeId','commonName','botanicalName','plantDate','location','latitude','longitude','height','girth','health','status','monitorDate','maintenance','csrPartner','implementer','projectName','remarks'];
  const csv=[headers,...records.map(r=>keys.map(k=>r[k]||''))].map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='OSF_Tree_Inventory.csv';a.click();URL.revokeObjectURL(a.href);
+}
+function resetAllTo400(){
+ if(confirm('Reset tree records to the 400 preloaded tree IDs (OSF-KLR-0001 to OSF-KLR-0400)?')){
+  records=generate400Records();
+  save();
+ }
 }
 renderTable();updateStats();
 </script>
